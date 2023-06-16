@@ -3,6 +3,7 @@ package main
 import (
 	"image"
 	"image/color"
+	"math"
 
 	"github.com/aquilax/go-perlin"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -54,34 +55,26 @@ func fillWaterSource(img *ebiten.Image, currentPosition *Position, currentAltitu
 func GenerateTerrain() {
 	for y := 0; y < globals.ScreenHeight; y++ {
 		for x := 0; x < globals.ScreenWidth; x++ {
-			continent := game.Continents.Noise2D(XOFF(x)*10, YOFF(y)*10)
-			altitude := (game.Altitudes.Noise2D(XOFF(x), YOFF(y)) + 1)
-			altitude *= altitude
-			if continent > globals.ContinentThreshold {
-				grey := uint8(255)
+			altitude := game.Altitudes.Noise2D(XOFF(x), YOFF(y))
+
+			sea := altitude < globals.SeaAltitude
+			coast := altitude >= globals.SeaAltitude && altitude < globals.CoastAltitude
+			ground := altitude >= globals.CoastAltitude && altitude < globals.GroundAltitude
+			snow := altitude >= globals.GroundAltitude
+
+			if ground {
+				g := uint8(127.5 * (math.Cos(altitude*math.Pi) + 1))
+				r := uint8(127.5 * (-math.Cos(altitude*math.Pi) + 1))
+				b := uint8(20 * (math.Cos(altitude*math.Pi) + 1))
+				game.Image.Set(x, y, color.RGBA{r, g, b, 255})
+			} else if coast {
+				game.Image.Set(x, y, color.RGBA{250, 248, 190, 255})
+			} else if snow {
+				grey := uint8(255 - (255*(math.Cos(altitude*math.Pi)+1))/5)
 				game.Image.Set(x, y, color.RGBA{grey, grey, grey, 255})
-
+			} else if sea {
+				game.Image.Set(x, y, color.RGBA{0, 0, 255, 255})
 			}
-
-
-			// sea := altitude < globals.SeaAltitude
-			// coast := altitude >= globals.SeaAltitude && altitude < globals.CoastAltitude
-			// ground := altitude >= globals.CoastAltitude && altitude < globals.GroundAltitude
-			// snow := altitude >= globals.GroundAltitude
-
-			// if ground {
-			// 	g := uint8(127.5 * (math.Cos(altitude*math.Pi) + 1))
-			// 	r := uint8(127.5 * (-math.Cos(altitude*math.Pi) + 1))
-			// 	b := uint8(20 * (math.Cos(altitude*math.Pi) + 1))
-			// 	game.Image.Set(x, y, color.RGBA{r, g, b, 255})
-			// } else if coast {
-			// 	game.Image.Set(x, y, color.RGBA{250, 248, 190, 255})
-			// } else if snow {
-			// 	grey := uint8(255 - (255*(math.Cos(altitude*math.Pi)+1))/5)
-			// 	game.Image.Set(x, y, color.RGBA{grey, grey, grey, 255})
-			// } else if sea {
-			// 	game.Image.Set(x, y, color.RGBA{0, 0, 255, 255})
-			// }
 		}
 	}
 }

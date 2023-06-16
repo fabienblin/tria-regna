@@ -17,7 +17,7 @@ func init() {
 
 	viper.SetConfigName("config")
 	viper.SetConfigType("json")
-	viper.AddConfigPath("../")
+	viper.AddConfigPath("./")
 	err := viper.ReadInConfig() // Find and read the config file
 	if err != nil { // Handle errors reading the config file
 		log.Fatalf("fatal error config file: %s", err.Error())

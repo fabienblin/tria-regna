@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/color"
-	"log"
 
 	"github.com/spf13/viper"
 )
@@ -42,13 +41,6 @@ type Global struct {
 }
 
 func initGlobals() *Global {
-	err := viper.ReadInConfig() // Find and read the config file
-	if err != nil { // Handle errors reading the config file
-		log.Fatalf("fatal error config file: %s", err.Error())
-		panic(nil)
-	}
-	a := viper.GetFloat64("Scale")
-	_ = a
 	return &Global{
 		ScreenWidth:			viper.GetInt("ScreenWidth"),
 		ScreenHeight:			viper.GetInt("ScreenHeight"),
