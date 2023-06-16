@@ -1,4 +1,4 @@
-module tria-regna.com/main
+module tria-regna.com
 
 go 1.20
 
