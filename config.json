@@ -1,0 +1,18 @@
+{
+	"ScreenWidth":			320,
+	"ScreenHeight":			180,
+	"Zoom":					1.1,
+	"Scale":				0.1,
+	"Octaves":				6,
+	"Persistence":			4,
+	"Lacunarity":			8,
+	"Threshold":			0.45,
+	"Seed":					12345,
+	"Speed":				3,
+	"SeaAltitude":			-0.5,
+	"CoastAltitude":		-0.505,
+	"GroundAltitude":		0.5,
+	"SnowAltitude":			1,
+	"WaterSourceAltitude":	0.4,
+	"ContinentThreshold":	0.5
+}
