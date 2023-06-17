@@ -55,17 +55,20 @@ func fillWaterSource(img *ebiten.Image, currentPosition *Position, currentAltitu
 func GenerateTerrain() {
 	for y := 0; y < globals.ScreenHeight; y++ {
 		for x := 0; x < globals.ScreenWidth; x++ {
-			altitude := game.Altitudes.Noise2D(XOFF(x), YOFF(y))
+			dx := XOFF(x)
+			dy := YOFF(y)
+			altitude := 1 - math.Sqrt(dx*dx+dy*dy)
+			altitude += game.Altitudes.Noise2D(dx, dy) * 3
 
-			sea := altitude < globals.SeaAltitude
+			sea := altitude <= globals.SeaAltitude
 			coast := altitude >= globals.SeaAltitude && altitude < globals.CoastAltitude
 			ground := altitude >= globals.CoastAltitude && altitude < globals.GroundAltitude
 			snow := altitude >= globals.GroundAltitude
 
 			if ground {
-				g := uint8(127.5 * (math.Cos(altitude*math.Pi) + 1))
-				r := uint8(127.5 * (-math.Cos(altitude*math.Pi) + 1))
-				b := uint8(20 * (math.Cos(altitude*math.Pi) + 1))
+				g := uint8((255 * (math.Cos(altitude*math.Pi) + 3)) / 4)
+				r := uint8(255 * altitude * altitude)
+				b := uint8(0)
 				game.Image.Set(x, y, color.RGBA{r, g, b, 255})
 			} else if coast {
 				game.Image.Set(x, y, color.RGBA{250, 248, 190, 255})
@@ -73,7 +76,7 @@ func GenerateTerrain() {
 				grey := uint8(255 - (255*(math.Cos(altitude*math.Pi)+1))/5)
 				game.Image.Set(x, y, color.RGBA{grey, grey, grey, 255})
 			} else if sea {
-				game.Image.Set(x, y, color.RGBA{0, 0, 255, 255})
+				game.Image.Set(x, y, globals.Blue)
 			}
 		}
 	}

@@ -31,6 +31,7 @@ type Global struct {
 
 	// continents
 	ContinentThreshold	float64
+	ContinentRadius		float64
 
 	// colors
 	Blue	color.RGBA
@@ -58,6 +59,7 @@ func initGlobals() *Global {
 		SnowAltitude:			viper.GetFloat64("SnowAltitude"),
 		WaterSourceAltitude:	viper.GetFloat64("WaterSourceAltitude"),
 		ContinentThreshold:		viper.GetFloat64("ContinentThreshold"),
+		ContinentRadius:		viper.GetFloat64("ContinentRadius"),
 		Blue:					color.RGBA{0, 0, 255, 255},
 		Red:					color.RGBA{255, 0, 0, 255},
 		Green:					color.RGBA{0, 255, 0, 255},

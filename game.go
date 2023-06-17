@@ -16,8 +16,8 @@ type GameInstance struct {
 func initGame() *GameInstance {
 	g := &GameInstance{
 		Image:        ebiten.NewImage(globals.ScreenWidth, globals.ScreenHeight),
-		X:            0,
-		Y:            0,
+		X:            float64(globals.ScreenWidth) / 2,
+		Y:            float64(globals.ScreenHeight) / 2,
 		Altitudes:    perlin.NewPerlin(globals.Octaves, globals.Persistence, globals.Lacunarity, globals.Seed),
 		WaterSources: perlin.NewPerlin(globals.Octaves, globals.Persistence, globals.Lacunarity, globals.Seed),
 		Continents:   perlin.NewPerlin(2, 3, 2, globals.Seed+1),
@@ -47,10 +47,11 @@ func (g *GameInstance) Update() error {
 		g.X -= globals.Speed
 	}
 
+	// zoom
 	perlinCenterX := XOFF(globals.ScreenWidth / 2)
 	perlinCenterY := YOFF(globals.ScreenHeight / 2)
 
-	if ebiten.IsKeyPressed(ebiten.KeyPageUp) {
+	if ebiten.IsKeyPressed(ebiten.KeyKPAdd) {
 		if globals.Scale*globals.Zoom < 1 {
 			globals.Scale *= globals.Zoom // Increase the scale factor
 
@@ -65,7 +66,7 @@ func (g *GameInstance) Update() error {
 		}
 	}
 
-	if ebiten.IsKeyPressed(ebiten.KeyPageDown) {
+	if ebiten.IsKeyPressed(ebiten.KeyKPSubtract) {
 		if globals.Scale/globals.Zoom > 0 {
 			globals.Scale /= globals.Zoom // Decrease the scale factor
 
@@ -86,7 +87,7 @@ func (g *GameInstance) Update() error {
 func (g *GameInstance) Draw(screen *ebiten.Image) {
 	// op := &ebiten.DrawImageOptions{}
 	GenerateTerrain()
-	GenerateRivers(findLocalMinima(g.Image))
+	// GenerateRivers(findLocalMinima(g.Image))
 
 	screen.DrawImage(g.Image, nil)
 }

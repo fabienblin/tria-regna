@@ -2,7 +2,7 @@
 	"ScreenWidth":			320,
 	"ScreenHeight":			180,
 	"Zoom":					1.1,
-	"Scale":				0.001,
+	"Scale":				0.02,
 	"Octaves":				6,
 	"Persistence":			8,
 	"Lacunarity":			2,
@@ -11,7 +11,8 @@
 	"Speed":				2,
 	"SeaAltitude":			0.0,
 	"CoastAltitude":		0.05,
-	"GroundAltitude":		0.45,
+	"GroundAltitude":		1.0,
 	"SnowAltitude":			1.0,
-	"WaterSourceAltitude":	0.4
+	"WaterSourceAltitude":	0.4,
+	"ContinentRadius":		10.0
 }
