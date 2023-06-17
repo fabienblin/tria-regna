@@ -66,8 +66,8 @@ func GenerateTerrain() {
 			snow := altitude >= globals.GroundAltitude
 
 			if ground {
-				g := uint8((255 * (math.Cos(altitude*math.Pi) + 3)) / 4)
-				r := uint8(255 * altitude * altitude)
+				g := uint8((255 * (math.Cos(altitude*math.Pi) + 5)) / 6)
+				r := uint8(255 * (altitude * altitude) / 2)
 				b := uint8(0)
 				game.Image.Set(x, y, color.RGBA{r, g, b, 255})
 			} else if coast {
