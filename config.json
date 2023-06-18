@@ -11,8 +11,8 @@
 	"Speed":				2,
 	"SeaAltitude":			0.0,
 	"CoastAltitude":		0.05,
-	"GroundAltitude":		1.1,
+	"GroundAltitude":		0.8,
 	"SnowAltitude":			1.0,
 	"WaterSourceAltitude":	0.4,
-	"ContinentRadius":		10.0
+	"ContinentRadius":		4.0
 }
